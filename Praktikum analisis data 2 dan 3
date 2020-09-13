@@ -1,0 +1,193 @@
+TB<-(Latihan01$TB)
+JK<-(Latihan01$JK)
+BB<-(Latihan01$BB)
+saku<-(Latihan01$Saku)
+
+#Histogram Tinggi Badan
+tinggi <- data.frame(
+  JK=factor(rep(c("1", "2"), each=200)),
+  TB=round(c(rnorm(200, mean=55, sd=5), rnorm(200, mean=65, sd=5)))
+)
+head(tinggi)
+
+# Change histogram plot line colors by groups
+ggplot(tinggi, aes(x=TB, color=JK)) +
+    geom_histogram(fill="yellow")
+# Overlaid histograms
+ggplot(tinggi, aes(x=TB, color=JK)) +
+  geom_histogram(fill="red", alpha=0.5, position="identity")
+
+
+#HistOgram Berat Badan
+Berat <- data.frame(
+  JK=factor(rep(c("1", "2"), each=200)),
+  BB=round(c(rnorm(200, mean=55, sd=5), rnorm(200, mean=65, sd=5)))
+)
+head(Berat)
+
+# Change histogram plot line colors by groups
+ggplot(Berat, aes(x=BB, color=JK)) +
+  geom_histogram(fill="orange")
+# Overlaid histograms
+ggplot(Berat, aes(x=BB, color=JK)) +
+  geom_histogram(fill="yellow", alpha=0.5, position="identity")
+
+#HistOgram Uang Saku
+Uang <- data.frame(
+  JK=factor(rep(c("1", "2"), each=200)),
+  saku=round(c(rnorm(200, mean=55, sd=5), rnorm(200, mean=65, sd=5)))
+)
+head(Uang)
+
+# Change histogram plot line colors by groups
+ggplot(Uang, aes(x=saku, color=JK)) +
+  geom_histogram(fill="green")
+# Overlaid histograms
+ggplot(Uang, aes(x=saku, color=JK)) +
+  geom_histogram(fill="green", alpha=0.5, position="identity")
+
+#Box Plot Berat Badan
+boxplot(Latihan01$BB~Latihan01$JK,
+        main = "Boxplot Berat Badan",
+        xlab = "Jenis Kelamin",
+        ylab = "Berat Badan",
+        col = "Blue",
+        border = "Black",
+        horizontal = FALSE,
+        notch = TRUE
+)
+
+#Box Plot Tinggi Badan
+boxplot(Latihan01$TB~Latihan01$JK,
+        main = "Boxplot Tinggi Badan",
+        xlab = "Jenis Kelamin",
+        ylab = "Tinggi Badan",
+        col = "red",
+        border = "Black",
+        horizontal = FALSE,
+        notch = TRUE
+)
+
+#Box Plot uang saku
+boxplot(Latihan01$Saku~Latihan01$JK,
+        main = "Boxplot Uang Saku",
+        xlab = "Jenis Kelamin",
+        ylab = "Uang Saku",
+        col = "orange",
+        border = "Black",
+        horizontal = FALSE,
+        notch = TRUE
+)
+
+#Analisis Deskriptive
+summary(Latihan01$TB)
+summary(Latihan01$BB)
+summary(Latihan01$JK)
+summary(Latihan01$Saku)
+sd(Latihan01$TB)
+sd(Latihan01$BB)
+sd(Latihan01$JK)
+sd(Latihan01$Saku)
+
+#Scater Plot Sederhana
+SK<-(Latihan01$SK)
+sp <- ggplot(data=Latihan01, aes(x=saku, y=SK)) + geom_point()
+
+#Scater plot dengan regresi
+require(stats)
+reg<-lm(saku ~ SK, data = Latihan01)
+reg
+
+coeff=coefficients(reg)
+# Equation of the line : 
+eq = paste0("y = ", round(coeff[2],1), "*x + ", round(coeff[1],1))
+# Plot
+sp + geom_abline(intercept = 37, slope = -5)+
+  ggtitle(eq)
+# Change line type, color and size
+sp + geom_abline(intercept = 37, slope = -5, color="red", 
+                 linetype="dashed", size=1.5)+
+  ggtitle(eq)
+
+
+ds <- Latihan01[, c("Saku", "SK", "JK")]
+head(ds)
+ggplot2.scatterplot(data=ds, xName='Saku',yName='SK', 
+                    groupName='JK', size=2,
+                    backgroundColor="white",
+                    groupColors=c('#999999','#E69F00', '#56B4E9')) 
+
+
+
+#Praktikum 2 
+# Nomor 1
+dbinom(10, size = 20, prob = 0.6, log = FALSE)
+
+#manual
+dbinom(9, size = 20, prob = 0.6)+
+  dbinom(8, size = 20, prob = 0.6)+
+  dbinom(7, size = 20, prob = 0.6)+
+  dbinom(6, size = 20, prob = 0.6)+
+  dbinom(5, size = 20, prob = 0.6)+
+  dbinom(4, size = 20, prob = 0.6)+
+  dbinom(3, size = 20, prob = 0.6)+
+  dbinom(2, size = 20, prob = 0.6)+
+  dbinom(1, size = 20, prob = 0.6)+
+  dbinom(0, size = 20, prob = 0.6)
+#Langsung
+pbinom(9, size = 20, prob = 0.6)
+
+
+#Manual
+a<-dbinom(7, size = 20, prob = 0.6)+
+  dbinom(6, size = 20, prob = 0.6)+
+  dbinom(5, size = 20, prob = 0.6)+
+  dbinom(4, size = 20, prob = 0.6)+
+  dbinom(3, size = 20, prob = 0.6)+
+  dbinom(2, size = 20, prob = 0.6)+
+  dbinom(1, size = 20, prob = 0.6)+
+  dbinom(0, size = 20, prob = 0.6)
+b<- 1-a
+b
+#langsung 
+1-pbinom(7, size = 20, prob = 0.6)
+
+dbinom(20, size = 20, prob = 0.6, log = FALSE)
+
+dbinom(0, size = 20, prob = 0.6, log = FALSE)
+
+
+#Soal Praktikum 2
+#Nomor 2
+dbinom(10, size = 20, prob = 0.75, log = FALSE)
+
+dbinom(5, size = 20, prob = 0.75, log = FALSE)
+
+1-pbinom(4,size = 20, prob = 0.75)
+
+
+#Nomor 3
+dnorm(20, mean = 30, sd = 5, log = FALSE)
+
+pnorm(20, mean = 30, sd = 5, log = FALSE)
+
+1-pnorm(35, mean = 30, sd = 5, log = FALSE)
+
+pnorm(35, mean = 30, sd = 5, log = FALSE) - pnorm(25, mean = 30, sd = 5, log = FALSE)
+
+pnorm(30, mean = 30, sd = 5, log = FALSE)-pnorm(25, mean = 30, sd = 5, log = FALSE)
+pnorm(40, mean = 30, sd = 5, log = FALSE)-pnorm(30, mean = 30, sd = 5, log = FALSE)
+
+diameter1<- qnorm(0.3413447, mean = 30, sd = 5, lower.tail = TRUE, log.p = FALSE)
+diameter1
+
+diameter2<- qnorm(0.4772499, mean = 30, sd = 5, lower.tail = TRUE, log.p = FALSE)
+diameter2
+
+kiri <- qnorm(0.1, mean = 30, sd = 5, lower.tail = TRUE, log.p = FALSE)
+kanan <- qnorm(0.9, mean = 30, sd = 5, lower.tail = TRUE, log.p = FALSE)
+kanan
+kiri
+
+
+
